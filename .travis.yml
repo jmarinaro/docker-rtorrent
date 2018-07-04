@@ -1,0 +1,18 @@
+dist: trusty
+sudo: required
+
+jobs:
+  include:
+    - stage: build docker image
+      env:
+        - DOCKER_ORGANIZATION=jmarinaro
+        - DOCKER_REPOSITORY=rtorrent
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin quay.io
+      - docker build -t quay.io/$DOCKER_ORGANIZATION/$DOCKER_REPOSITORY .
+      - docker tag quay.io/$DOCKER_ORGANIZATION/$DOCKER_REPOSITORY:latest quay.io/$DOCKER_ORGANIZATION/$DOCKER_REPOSITORY:$TRAVIS_BRANCH
+      - docker push quay.io/$DOCKER_ORGANIZATION/$DOCKER_REPOSITORY
+
+branches:
+  except:
+  - master
