@@ -9,4 +9,4 @@ COPY .rtorrent.rc .
 EXPOSE 5000 50000
 VOLUME ["/opt/rtorrent"]
 
-ENTRYPOINT ["rtorrent", "-n", "-o", "import=/opt/rtorrent/.rtorrent.rc"]
+ENTRYPOINT rm -f /opt/rtorrent/.session/rtorrent.lock && rtorrent -n -o import=/opt/rtorrent/.rtorrent.rc
