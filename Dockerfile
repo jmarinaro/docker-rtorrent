@@ -1,6 +1,7 @@
 FROM alpine:3.9
 
 RUN apk --no-cache add \
+    bind-tools \
     rtorrent
 
 WORKDIR /opt/rtorrent
